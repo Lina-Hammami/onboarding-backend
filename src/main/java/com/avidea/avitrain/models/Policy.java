@@ -13,6 +13,7 @@ public class Policy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long policyId;
     @NotNull
+    @Column(unique = true)
     private String policyNb;
     @NotNull
     private String vehiculeNb;
@@ -29,6 +30,9 @@ public class Policy {
     )
     private List<Claim> claims = new ArrayList<>();
 
+    public Policy(){
+
+    }
     public Policy(Long policyId, String policyNb, String vehiculeNb, String insuredName, Date startDate, Date endDate) {
         this.policyId = policyId;
         this.policyNb = policyNb;

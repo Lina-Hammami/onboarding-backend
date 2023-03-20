@@ -15,6 +15,7 @@ public class Photo {
     @NotNull
     private String description;
     @NotNull
+    @Column(unique = true)
     private String link;
     @ManyToOne
     @JoinColumn(name="claim_id")

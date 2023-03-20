@@ -77,7 +77,8 @@ public class ClaimController {
     @GetMapping("/list/{id}/policy")
     public ResponseEntity<Policy> getClaimPolicy(@PathVariable("claimId") Long claimId){
         try {
-            Policy policy = policyService.getPolicyByClaimId(claimId);
+            Long pId = claimService.getClaim(claimId).getPolicy().getPolicyId();
+            Policy policy = policyService.getPolicy(pId);
             if (policy==null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -89,8 +90,11 @@ public class ClaimController {
     @GetMapping("/list/{id}/photos")
     public ResponseEntity<List<Photo>> getClaimPhotos(@PathVariable("id") Long claimId){
         try {
+            Claim claim = this.getClaim(claimId).getBody();
             List<Photo> photos = new ArrayList<Photo>();
-            photoService.getPhotosByClaimId(claimId).forEach(photos::add);
+            if (claim!=null){
+                photoService.getPhotosByClaimId(claim).forEach(photos::add);
+            }
             if (photos==null || photos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

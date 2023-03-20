@@ -22,6 +22,7 @@ public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long claimId;
     @NotNull
+    @Column(unique = true)
     private String claimNb;
     @NotNull
     private Status status;
@@ -34,13 +35,15 @@ public class Claim {
     @JoinColumn(name="policy_id")
     private Policy policy;
     @OneToMany(
-            mappedBy="photo",
+            mappedBy="claim",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Claim> photos = new ArrayList<>();
+    private List<Photo> photos = new ArrayList<>();
 
+    public Claim(){
 
+    }
     public Claim(Long claimId, String claimNb, Status status, Date accidentDate, Date creationDate, Policy policy) {
         this.claimId = claimId;
         this.claimNb = claimNb;
