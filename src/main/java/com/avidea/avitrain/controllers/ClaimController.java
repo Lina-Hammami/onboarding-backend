@@ -38,7 +38,7 @@ public class ClaimController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/list/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Claim> getClaim(@PathVariable long id){
         Claim claim =  claimService.getClaim(id);
         if (claim != null) {
@@ -56,10 +56,10 @@ public class ClaimController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
-    @PostMapping("/update/{id}")
-    public ResponseEntity<Claim>  updateClaim(@RequestBody Claim claim, @PathVariable long id)  {
+    @PostMapping("/update")
+    public ResponseEntity<Claim>  updateClaim(@RequestBody Claim claim)  {
         try {
-            Claim c = claimService.updateClaim(claim, id);
+            Claim c = claimService.updateClaim(claim);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
