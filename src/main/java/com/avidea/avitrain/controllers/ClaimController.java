@@ -56,10 +56,10 @@ public class ClaimController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
-    @PostMapping("/update")
-    public ResponseEntity<Claim>  updateClaim(@RequestBody Claim claim)  {
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Claim>  updateClaim(@RequestBody Claim claim, @PathVariable long id)  {
         try {
-            Claim c = claimService.updateClaim(claim);
+            Claim c = claimService.updateClaim(claim, id);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);

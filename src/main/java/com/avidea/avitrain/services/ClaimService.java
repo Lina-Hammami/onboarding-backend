@@ -31,7 +31,7 @@ public class ClaimService {
         claimRepository.deleteById(id);
     }
 
-    public Claim updateClaim(Claim claim) {
+    public Claim updateClaim(Claim claim, long id) {
         // TODO: fix it
         return claimRepository.save(claim);
     }
