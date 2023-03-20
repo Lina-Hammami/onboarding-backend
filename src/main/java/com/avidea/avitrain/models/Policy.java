@@ -1,5 +1,6 @@
 package com.avidea.avitrain.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Policy {
     private Date startDate;
     @NotNull
     private Date endDate;
+    @JsonManagedReference
     @OneToMany(
             mappedBy="policy",
             cascade = CascadeType.ALL,
@@ -33,8 +35,7 @@ public class Policy {
     public Policy(){
 
     }
-    public Policy(Long policyId, String policyNb, String vehiculeNb, String insuredName, Date startDate, Date endDate) {
-        this.policyId = policyId;
+    public Policy(String policyNb, String vehiculeNb, String insuredName, Date startDate, Date endDate) {
         this.policyNb = policyNb;
         this.vehiculeNb = vehiculeNb;
         this.insuredName = insuredName;

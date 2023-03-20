@@ -1,5 +1,7 @@
 package com.avidea.avitrain.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -31,9 +33,11 @@ public class Claim {
     @NotNull
     private Date creationDate;
     @NotNull
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="policy_id")
     private Policy policy;
+    @JsonManagedReference
     @OneToMany(
             mappedBy="claim",
             cascade = CascadeType.ALL,
@@ -44,6 +48,20 @@ public class Claim {
     public Claim(){
 
     }
+    public Claim(String claimNb, Status status, Date accidentDate, Date creationDate) {
+        this.claimNb = claimNb;
+        this.status = status;
+        this.accidentDate = accidentDate;
+        this.creationDate = creationDate;
+    }
+    public Claim(String claimNb, Status status, Date accidentDate, Date creationDate, Policy policy) {
+        this.claimNb = claimNb;
+        this.status = status;
+        this.accidentDate = accidentDate;
+        this.creationDate = creationDate;
+        this.policy = policy;
+    }
+
     public Claim(Long claimId, String claimNb, Status status, Date accidentDate, Date creationDate, Policy policy) {
         this.claimId = claimId;
         this.claimNb = claimNb;
@@ -52,6 +70,7 @@ public class Claim {
         this.creationDate = creationDate;
         this.policy = policy;
     }
+
     public Long getClaimId() {
         return claimId;
     }
@@ -98,5 +117,12 @@ public class Claim {
         this.creationDate = creationDate;
     }
 
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
 
 }

@@ -24,10 +24,13 @@ public class PhotoService {
     public Photo addPhoto(Photo photo){
         return photoRepository.save(photo);
     }
+    public Photo updatePhoto(Photo photo, long id){
+        return photoRepository.save(photo);
+    }
     public void deletePhoto(long id){
         photoRepository.deleteById(id);
     }
     public List<Photo> getPhotosByClaimId(Claim claim) {
-        return photoRepository.findAllByClaim(claim);
+        return photoRepository.findAllByClaim(claim.getClaimId());
     }
 }

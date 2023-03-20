@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -74,34 +75,18 @@ public class ClaimController {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
-    @GetMapping("/list/{id}/policy")
-    public ResponseEntity<Policy> getClaimPolicy(@PathVariable("claimId") Long claimId){
-        try {
-            Long pId = claimService.getClaim(claimId).getPolicy().getPolicyId();
-            Policy policy = policyService.getPolicy(pId);
-            if (policy==null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(policy, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/list/{id}/photos")
-    public ResponseEntity<List<Photo>> getClaimPhotos(@PathVariable("id") Long claimId){
-        try {
-            Claim claim = this.getClaim(claimId).getBody();
-            List<Photo> photos = new ArrayList<Photo>();
-            if (claim!=null){
-                photoService.getPhotosByClaimId(claim).forEach(photos::add);
-            }
-            if (photos==null || photos.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(photos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @GetMapping("/ggg")
+//    public void generateDummyData() {
+//
+//        Policy policy1	= new Policy("1125396", "445", "lina",new Date(), new Date());
+//        Claim claim1= new Claim("11253968", Claim.Status.EXPERTISE,
+//                new Date(), new Date(),policy1);
+//        Photo p1 = new Photo("titlePH","descriptionphoto","linkphoto", claim1);
+//        Photo p2 = new Photo("titlePH","descriptionphoto","linkphoto", claim1);
+//        policyService.addPolicy(policy1);
+//        photoService.addPhoto(p1);
+//        photoService.addPhoto(p2);
+//
+//    }
 
 }
