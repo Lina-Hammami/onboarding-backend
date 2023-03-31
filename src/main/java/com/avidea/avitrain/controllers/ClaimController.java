@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/claims")
 public class ClaimController {
     @Autowired
@@ -48,7 +48,7 @@ public class ClaimController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/add")
+    @PostMapping(value="/add", consumes = {"application/xml","application/json"})
     public ResponseEntity<Claim>  addClaim(@RequestBody Claim claim)  {
         try {
             Claim c = claimService.addClaim(claim);
@@ -75,18 +75,5 @@ public class ClaimController {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
-//    @GetMapping("/ggg")
-//    public void generateDummyData() {
-//
-//        Policy policy1	= new Policy("1125396", "445", "lina",new Date(), new Date());
-//        Claim claim1= new Claim("11253968", Claim.Status.EXPERTISE,
-//                new Date(), new Date(),policy1);
-//        Photo p1 = new Photo("titlePH","descriptionphoto","linkphoto", claim1);
-//        Photo p2 = new Photo("titlePH","descriptionphoto","linkphoto", claim1);
-//        policyService.addPolicy(policy1);
-//        photoService.addPhoto(p1);
-//        photoService.addPhoto(p2);
-//
-//    }
 
 }

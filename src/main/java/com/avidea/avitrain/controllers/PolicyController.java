@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200", maxAge = 3600)
 public class PolicyController {
     @Autowired
     private ClaimService claimService;
@@ -27,6 +27,24 @@ public class PolicyController {
             return new ResponseEntity<>(p, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+    @GetMapping("/policies/{id}")
+    public ResponseEntity<Policy> getPolicy(@PathVariable long id){
+        Policy policy =  policyService.getPolicy(id);
+        if (policy != null) {
+            return new ResponseEntity<>(policy, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/policies/nb/{nb}")
+    public ResponseEntity<Policy> getPolicyByNumber(@PathVariable String nb){
+        Policy policy =  policyService.getPolicyByNumber(nb);
+        if (policy != null) {
+            return new ResponseEntity<>(policy, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     @GetMapping("claims/{id}/policy")

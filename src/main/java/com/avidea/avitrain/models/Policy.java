@@ -1,6 +1,6 @@
 package com.avidea.avitrain.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -24,7 +24,8 @@ public class Policy {
     private Date startDate;
     @NotNull
     private Date endDate;
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     @OneToMany(
             mappedBy="policy",
             cascade = CascadeType.ALL,

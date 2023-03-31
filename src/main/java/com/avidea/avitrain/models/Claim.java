@@ -1,7 +1,9 @@
 package com.avidea.avitrain.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -12,13 +14,16 @@ import java.util.List;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property  = "claimId",
+        scope     = Long.class)
 @Table(name = "claims")
 public class Claim {
 
     public enum Status{
-        OPEN,
-        EXPERTISE,
-        CLOSED
+        open,
+        ongoing,
+        closed
     };
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +38,7 @@ public class Claim {
     @NotNull
     private Date creationDate;
     @NotNull
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name="policy_id")
     private Policy policy;
@@ -43,7 +48,7 @@ public class Claim {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Photo> photos = new ArrayList<>();
+        private List<Photo> photos = new ArrayList<>();
 
     public Claim(){
 

@@ -28,4 +28,7 @@ public class PolicyService {
         policyRepository.deleteById(id);
     }
 
+    public Policy getPolicyByNumber(String number) {
+        return policyRepository.findByPolicyNb(number);
+    }
 }

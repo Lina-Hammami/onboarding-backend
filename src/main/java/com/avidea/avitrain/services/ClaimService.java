@@ -32,8 +32,24 @@ public class ClaimService {
     }
 
     public Claim updateClaim(Claim claim, long id) {
-        // TODO: fix it
-        return claimRepository.save(claim);
+        Claim myclaim = claimRepository.findById(id).orElse(null);
+        if(myclaim.getClaimNb() != claim.getClaimNb()) {
+            claimRepository.updateClaimNb(id,claim.getClaimNb());
+            return myclaim;
+        }
+        if(myclaim.getStatus() != claim.getStatus()) {
+            claimRepository.updateStatus(id,claim.getStatus().toString());
+            return myclaim;
+        }
+        if(myclaim.getAccidentDate() != claim.getAccidentDate())  {
+            claimRepository.updateAccidentDate(id,claim.getAccidentDate());
+            return myclaim;
+        }
+        if(myclaim.getCreationDate() != claim.getCreationDate())  {
+            claimRepository.updateAccidentDate(id,claim.getCreationDate());
+            return myclaim;
+        }
+        return myclaim;
     }
 
 }
