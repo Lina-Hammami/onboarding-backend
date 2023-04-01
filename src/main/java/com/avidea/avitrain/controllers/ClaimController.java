@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class ClaimController {
             }
             return new ResponseEntity<>(claims, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
     @GetMapping("/{id}")
@@ -57,13 +58,14 @@ public class ClaimController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
-    @PostMapping("/update/{id}")
+    @Transactional
+    @RequestMapping(method = RequestMethod.PUT, value="/update/{id}")
     public ResponseEntity<Claim>  updateClaim(@RequestBody Claim claim, @PathVariable long id)  {
         try {
             Claim c = claimService.updateClaim(claim, id);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(null, HttpStatus.NOT_MODIFIED);
         }
     }
     @DeleteMapping("/delete/{id}")
@@ -72,7 +74,7 @@ public class ClaimController {
             claimService.deleteClaim(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

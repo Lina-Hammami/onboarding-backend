@@ -18,7 +18,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
     void updateClaimNb(@Param(value = "id") long id, @Param(value = "claimNb") String claimNb);
     @Modifying
     @Query("update Claim c set c.status = :status where c.id = :id")
-    void updateStatus(@Param(value = "id") long id, @Param(value = "status") String status);
+    void updateStatus(@Param(value = "id") long id, @Param(value = "status") Claim.Status status);
     @Modifying
     @Query("update Claim c set c.accidentDate = :accidentDate where c.id = :id")
     void updateAccidentDate(@Param(value = "id") long id, @Param(value = "accidentDate") Date accidentDate);
