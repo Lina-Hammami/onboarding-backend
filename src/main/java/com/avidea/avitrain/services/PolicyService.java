@@ -31,4 +31,8 @@ public class PolicyService {
     public Policy getPolicyByNumber(String number) {
         return policyRepository.findByPolicyNb(number);
     }
+
+    public List<String> getAllPNumbers() {
+        return policyRepository.findAllNumbers();
+    }
 }

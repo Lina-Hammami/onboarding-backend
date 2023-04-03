@@ -65,11 +65,20 @@ public class PolicyController {
         try {
             List<Policy> policies = policyService.getPolicies();
             if (policies==null || policies.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(policies, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/policies/nbs")
+    public ResponseEntity<List<String>> getPoliciesNumbers(){
+        try {
+            List<String> numbers = policyService.getAllPNumbers();
+            return new ResponseEntity<>(numbers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 }
